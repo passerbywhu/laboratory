@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.passerbywhu.laboratory.generictype.GenericSuperTest;
+import com.passerbywhu.laboratory.generictype.TypePrinter;
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
 
@@ -22,5 +25,8 @@ public class MainActivity extends AppCompatActivity {
                 int id = v.getId();
             }
         });
+
+        GenericSuperTest.test();
+        TypePrinter.test();
     }
 }
