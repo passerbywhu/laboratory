@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        GenericSuperTest.test();
+//        GenericSuperTest.test();
         TypePrinter.test();
     }
 }

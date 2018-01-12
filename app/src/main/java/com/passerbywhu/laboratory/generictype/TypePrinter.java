@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.Collection;
 
 /**
@@ -36,6 +37,8 @@ public class TypePrinter {
         } catch (Exception e) {}
         if (type instanceof ParameterizedType) {
             ParameterizedType ptype = (ParameterizedType) type;
+            System.out.println("rawType = " + ptype.getRawType());
+            System.out.println("ownerType = " + ptype.getOwnerType());
             Type[] types = ptype.getActualTypeArguments();
             for (Type t : types) {
                 System.out.print(">>");
@@ -59,6 +62,17 @@ public class TypePrinter {
         Type[] types = method.getGenericParameterTypes();
         for (Type t: types) {
             printlnType(t);
+            if (t instanceof TypeVariable) {
+                TypeVariable variable = (TypeVariable) t;
+                Type[] bounds = variable.getBounds();
+                if (bounds != null) {
+                    System.out.println("bounds begin");
+                    for (Type bound : bounds) {
+                        printlnType(bound);
+                    }
+                    System.out.println("bounds end");
+                }
+            }
         }
     }
 
