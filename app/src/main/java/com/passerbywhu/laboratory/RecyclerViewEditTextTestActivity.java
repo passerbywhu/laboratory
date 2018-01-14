@@ -38,6 +38,13 @@ public class RecyclerViewEditTextTestActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onViewAttachedToWindow(ViewHolder holder) {
+            super.onViewAttachedToWindow(holder);
+            holder.itemView.setEnabled(false);
+            holder.itemView.setEnabled(true);
+        }
+
+        @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             EditText editText = (EditText) holder.itemView;
             editText.setText("abcdefg   hijklmn");

@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.passerbywhu.laboratory.generictype.GenericSuperTest;
 import com.passerbywhu.laboratory.generictype.TypePrinter;
+import com.passerbywhu.laboratory.generictype.TypeToken;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        GenericSuperTest.test();
-        TypePrinter.test();
+//        TypePrinter.test();
+        TypeToken.test();
     }
 }

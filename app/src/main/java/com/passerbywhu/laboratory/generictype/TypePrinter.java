@@ -8,6 +8,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by hzwuwenchao on 2018/1/8.
@@ -19,6 +20,7 @@ public class TypePrinter {
         public T1 member2;
         public Collection<? extends Number> collection;
         public Collection<T2> collection2;
+        public Collection<List<T2>> collection3;
         public T2[] array;
         public <T extends Type> void method(T p1, T2 p2) {}
     }
@@ -27,14 +29,16 @@ public class TypePrinter {
         System.out.println(type.getClass().getSimpleName() + ":" + type);
     }
 
-    public static Type printlnFieldType(Class<? extends TypeClazz> clazz, String name) {
+    public static Type printlnFieldType(Class<?> clazz, String name) {
         System.out.println("name:" + name);
         Type type = null;
         try {
             Field field = clazz.getDeclaredField(name);
             type = field.getGenericType();
             printlnType(type);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (type instanceof ParameterizedType) {
             ParameterizedType ptype = (ParameterizedType) type;
             System.out.println("rawType = " + ptype.getRawType());
@@ -77,12 +81,21 @@ public class TypePrinter {
     }
 
     public static void test() {
-        TypeClazz<String, Integer> clazz = new TypeClazz<>();
-        TypePrinter.printlnFieldType(clazz.getClass(), "member");
-        TypePrinter.printlnFieldType(clazz.getClass(), "member2");
-        TypePrinter.printlnFieldType(clazz.getClass(), "collection");
-        TypePrinter.printlnFieldType(clazz.getClass(), "collection2");
-        TypePrinter.printlnFieldType(clazz.getClass(), "array");
-        TypePrinter.printlnMethodType(clazz.getClass(), "method");
+        TypeClazz<String, Integer> clazz = new TypeClazz<String, Integer>(){};
+        Type type = clazz.getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            ParameterizedType pType = (ParameterizedType) type;
+            Type[] argumentsTypes = pType.getActualTypeArguments();
+            for (int i = 0; i < argumentsTypes.length; i ++) {
+                printlnType(argumentsTypes[i]);
+            }
+        }
+//        TypePrinter.printlnFieldType(clazz.getClass(), "member");
+//        TypePrinter.printlnFieldType(clazz.getClass(), "member2");
+//        TypePrinter.printlnFieldType(clazz.getClass(), "collection");
+//        TypePrinter.printlnFieldType(clazz.getClass(), "collection2");
+//        TypePrinter.printlnFieldType(clazz.getClass(), "array");
+//        TypePrinter.printlnMethodType(clazz.getClass(), "method");
+        TypePrinter.printlnFieldType(clazz.getClass(), "collection3");
     }
 }
